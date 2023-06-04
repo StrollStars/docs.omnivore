@@ -186,6 +186,60 @@ date_published: {{{datePublished}}}
 state:: [[{{#lowerCase}}{{state}}{{/lowerCase}}]]
 ```
 
+### Front Matter
+
+笔记中的文字是给人阅读的，而元数据中的文字是给程序读取的，例如社区插件或Obsidian本身。front matter以YAML格式位于笔记头部，它包含了元数据。你可以用逗号分隔输入每个元数据，并且可以按metadata::alias格式自定义别名。例如：`date_saved::date`会在front matter中生成`date: 2023-05-30`。
+
+可用的元数据遵循以下命名规范：
+
+* title
+* author
+* tags
+* date_saved
+* date_published
+* omnivore_url
+* site_name
+* original_url
+* description
+* note
+* type
+* date_read
+* words_count
+* read_length
+* state
+* date_archived
+
+默认的元数据有`title, author, tags, date_saved, date_published`。
+
+请注意为了保证唯一性，`id`总是会出现在front matter中。
+
+### Front Matter Template
+
+当设置了front matter template内容后，它会覆盖front matter中的内容。否则，会按照基本设置中“Front Matter”的设置生成front matter内容。
+
+可用的变量和[模板中可用的变量](#模板中可用的变量)相同。
+
+示例front matter template：
+
+```
+id: {{{id}}}
+title: >
+  {{{title}}}
+{{#author}}
+author: >
+  {{{author}}}
+{{/author}}
+{{#labels.length}}
+tags:
+{{#labels}} - {{{name}}}
+{{/labels}}
+{{/labels.length}}
+date_saved: {{{dateSaved}}}
+{{#datePublished}}
+date_published: {{{datePublished}}}
+{{/datePublished}}
+```
+
 ## 将所有文章同步到一个笔记中
 
 默认情况下，Omnivore 会将文章同步到 Obsidian 的独立文件中。 如果你想把所有的文章都同步到一个笔记中，你可以在插件设置中打开 **Is Single File** 选项，并使用一个固定的 **Filename** 。
